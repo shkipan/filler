@@ -6,13 +6,13 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/11 19:23:22 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/11 20:48:29 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/12 19:59:48 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int		is_aval(t_filler *filler, char x, char y)
+short	is_aval(t_filler *filler, char x, char y)
 {
 	int		i;
 	int		j;
@@ -28,10 +28,11 @@ int		is_aval(t_filler *filler, char x, char y)
 						x + i >= filler->map_size.x ||
 						y + j >= filler->map_size.y))
 				return (0);
-//			ft_printf("%d %d %c %c\n", i, j, filler->figure[i][j], filler->map[i + x][j + y]);
+//			ft_printf("%d %d %c %c\n", i, j,
+//			filler->figure[i][j], filler->map[i + x][j + y]);
 			if (filler->figure[i][j] == '*' &&
 					(filler->map[i + x][j + y] == filler->en ||
-					 filler->map[i + x][j + y] == filler->en + 32))
+						filler->map[i + x][j + y] == filler->en + 32))
 				return (0);
 		}
 	}

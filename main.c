@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 14:30:40 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/12 18:06:07 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/12 19:59:36 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,15 @@ int		main(void)
 		read_figure(filler);
 		find_players(filler);
 		print_map(filler);
-		filler->result.x = filler->st_my.x;
-		filler->result.y = filler->st_my.y;
+		filler->result.x = filler->st_my.x - filler->st_fig.x;
+		filler->result.y = filler->st_my.y - filler->st_fig.y;
 		key = 1;
 		if (key == 1)
 		{
 			freesher(filler);
 			ft_printf("%d %d\n", filler->result.x, filler->result.y);
-//			ft_printf("____________\n");
-//			while (1)
-//				key = 1;
+			while (1)
+				key = 1;
 			return (0);
 		}
 	}

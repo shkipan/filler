@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 14:57:20 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/11 19:23:17 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/12 19:56:02 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void	init_points(t_filler *filler)
 {
-	filler->result.x = 0;
-	filler->result.y = 0;
-	filler->st_my.x = 0;
-	filler->st_my.y = 0;
-	filler->st_en.x = 0;
-	filler->st_en.y = 0;
+	filler->result.x = -1;
+	filler->result.y = -1;
+	filler->st_my.x = -1;
+	filler->st_my.y = -1;
+	filler->st_en.x = -1;
+	filler->st_en.y = -1;
+	filler->st_fig.x = -1;
+	filler->st_fig.y = -1;
 }
 
 void	read_player(t_filler *filler)
@@ -51,6 +53,7 @@ void	read_map(t_filler *filler)
 		free(str);
 		get_next_line(0, &str);
 		filler->map[i] = ft_strdup(ft_strchr(str, '.'));
+		ft_strcapit(filler->map[i]);
 		i++;
 	}
 	free(str);
@@ -73,8 +76,14 @@ void	read_figure(t_filler *filler)
 	{
 		get_next_line(0, &str);
 		filler->figure[i] = ft_strdup(str);
+		if (ft_strchr(str, '*') && filler->st_fig.x < 0)
+			filler->st_fig.x = i;
 		i++;
 		free(str);
 	}
 	filler->figure[i] = NULL;
+	i = -1;
+	while (++i < filler->fig_size.y)
+		if (filler->figure[filler->st_fig.x][i] == '*' && filler->st_fig.y < 0)
+			filler->st_fig.y = i;
 }
