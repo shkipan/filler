@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 14:57:20 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/12 19:56:02 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/18 20:31:16 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 
 void	init_points(t_filler *filler)
 {
-	filler->result.x = -1;
-	filler->result.y = -1;
+	filler->result.x = 0;
+	filler->result.y = 0;
 	filler->st_my.x = -1;
 	filler->st_my.y = -1;
 	filler->st_en.x = -1;
 	filler->st_en.y = -1;
 	filler->st_fig.x = -1;
 	filler->st_fig.y = -1;
+	filler->dist = 1000000;
+	filler->my_count = 0;
+	filler->fig_count = 0;
 }
 
 void	read_player(t_filler *filler)
 {
 	char	*str;
 
-	init_points(filler);
 	get_next_line(0, &str);
 	filler->my = (ft_strchr(str, '1')) ? 'O' : 'X';
 	filler->en = (ft_strchr(str, '2')) ? 'O' : 'X';
@@ -40,6 +42,7 @@ void	read_map(t_filler *filler)
 	char	*str;
 	int		i;
 
+	init_points(filler);
 	get_next_line(0, &str);
 	filler->map_size.x = ft_atoi(ft_strchr(str, ' '));
 	free(str);
@@ -86,4 +89,27 @@ void	read_figure(t_filler *filler)
 	while (++i < filler->fig_size.y)
 		if (filler->figure[filler->st_fig.x][i] == '*' && filler->st_fig.y < 0)
 			filler->st_fig.y = i;
+}
+
+void	count_sym(t_filler *filler)
+{
+	short	i;
+	short	j;
+
+	i = -1;
+	while (++i < filler->map_size.x)
+	{
+		j = -1;
+		while (++j < filler->map_size.y)
+			if (filler->map[i][j] == filler->my)
+				filler->my_count++;
+	}
+	i = -1;
+	while (++i < filler->fig_size.x)
+	{
+		j = -1;
+		while (++j < filler->fig_size.y)
+			if (filler->figure[i][j] == filler->my)
+				filler->fig_count++;
+	}
 }

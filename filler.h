@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 14:45:03 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/12 19:58:03 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/18 20:32:13 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,20 @@ typedef struct	s_filler
 	t_point		result;
 	char		**map;
 	char		**figure;
-	short		dist;
+	int			dist;
+	int			my_count;
+	int			fig_count;
 }				t_filler;
 
 void			find_players(t_filler *filler);
-short			find_distance(t_filler *filler, short x, short y, int dist);
+short			find_distance_sym(t_filler *filler, short x, short y, int dist);
+void			search_min(t_filler *filler);
 
 short			is_aval(t_filler *filler, char x, char y);
 
 void			read_player(t_filler *filler);
 void			read_map(t_filler *filler);
 void			read_figure(t_filler *filler);
-void			freesher(t_filler *filler);
+void			count_sym(t_filler *filler);
 
 #endif

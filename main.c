@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 14:30:40 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/12 19:59:36 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/18 19:56:13 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,22 @@ void	print_map(t_filler *filler)
 	i = -1;
 	while (++i < filler->fig_size.x)
 		ft_printf("%s\n", filler->figure[i]);
-	ft_printf("%c %d %d\n", filler->my, filler->st_my.x, filler->st_my.y);
-	ft_printf("%c %d %d\n", filler->en, filler->st_en.x, filler->st_en.y);
+}
+
+void	freesher(t_filler *filler)
+{
+	int i;
+
+	i = -1;
+	if (filler == NULL)
+		return ;
+	while (++i < filler->map_size.x)
+		free(filler->map[i]);
+	free(filler->map);
+	i = -1;
+	while (++i < filler->fig_size.x)
+		free(filler->figure[i]);
+	free(filler->figure);
 }
 
 int		main(void)
@@ -33,39 +47,17 @@ int		main(void)
 
 	filler = (t_filler *)malloc(sizeof(t_filler));
 	read_player(filler);
-	key = 0;
+	key = 1;
 	while (1)
 	{
 		read_map(filler);
 		read_figure(filler);
+		count_sym(filler);
 		find_players(filler);
-		print_map(filler);
-		filler->result.x = filler->st_my.x - filler->st_fig.x;
-		filler->result.y = filler->st_my.y - filler->st_fig.y;
-		key = 1;
-		if (key == 1)
-		{
-			freesher(filler);
-			ft_printf("%d %d\n", filler->result.x, filler->result.y);
-			while (1)
-				key = 1;
-			return (0);
-		}
+		search_min(filler);
+		ft_printf("%d %d\n", filler->result.x, filler->result.y);
+		freesher(filler);
 	}
-	return (0);
-}
-
-void	freesher(t_filler *filler)
-{
-	int i;
-
-	i = -1;
-	while (++i < filler->map_size.x)
-		free(filler->map[i]);
-	free(filler->map);
-	i = -1;
-	while (++i < filler->fig_size.x)
-		free(filler->figure[i]);
-	free(filler->figure);
 	free(filler);
+	return (0);
 }
