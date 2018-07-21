@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 18:35:14 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/18 20:32:02 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/21 09:34:46 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,17 @@ int		count_distance(t_filler *filler, int x, int y)
 	short	j;
 	int		res;
 
-	i = -1;
+	i = filler->st_fig.x - 1;
+	j = filler->st_fig.y - 1;
 	res = 0;
 	while (++i < filler->fig_size.x)
 	{
-		j = -1;
 		while (++j < filler->fig_size.y)
 		{
 			if (filler->figure[i][j] == '*')
 				res += find_distance_sym(filler, x + i, y + j, 1);
 		}
+		j = filler->st_fig.y - 1;
 	}
 	return (res);
 }
@@ -100,7 +101,9 @@ void	spin_figure(t_filler *filler, int x, int y)
 			if (is_aval(filler, x - i, y - j))
 			{
 				temp = count_distance(filler, x - i, y - j);
-				if (temp <= filler->dist && ((x - i) != 0 && (y - j) != 0))
+				if (((x - i) != 0 && (y - j) != 0) &&
+						((temp <= filler->dist && filler->my == 'O')
+						|| (temp < filler->dist && filler->my == 'X')))
 				{
 					filler->dist = temp;
 					filler->result.x = x - i;

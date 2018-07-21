@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 14:57:20 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/18 20:31:16 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/21 09:33:11 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,12 @@ void	init_points(t_filler *filler)
 	filler->st_en.x = -1;
 	filler->st_en.y = -1;
 	filler->st_fig.x = -1;
-	filler->st_fig.y = -1;
+	filler->st_fig.y = 1000;
+	filler->end_fig.x = 0;
+	filler->end_fig.y = 0;
 	filler->dist = 1000000;
 	filler->my_count = 0;
 	filler->fig_count = 0;
-}
-
-void	read_player(t_filler *filler)
-{
-	char	*str;
-
-	get_next_line(0, &str);
-	filler->my = (ft_strchr(str, '1')) ? 'O' : 'X';
-	filler->en = (ft_strchr(str, '2')) ? 'O' : 'X';
-	free(str);
 }
 
 void	read_map(t_filler *filler)
@@ -55,12 +47,35 @@ void	read_map(t_filler *filler)
 	{
 		free(str);
 		get_next_line(0, &str);
-		filler->map[i] = ft_strdup(ft_strchr(str, '.'));
+		filler->map[i] = ft_strdup(str + 4);
 		ft_strcapit(filler->map[i]);
 		i++;
 	}
 	free(str);
 	filler->map[i] = NULL;
+}
+
+void	find_start_end(t_filler *filler)
+{
+	int		i;
+	int		j;
+
+	i = filler->st_fig.x - 1;
+	while (++i < filler->fig_size.x)
+	{
+		j = -1;
+		while (++j < filler->fig_size.y)
+		{
+			if (filler->figure[i][j] == '*' && j > filler->end_fig.y)
+				filler->end_fig.y = j;
+			if (filler->figure[i][j] == '*' && j < filler->st_fig.y)
+				filler->st_fig.y = j;
+		}
+	}
+	i = filler->fig_size.x;
+	while (--i >= 0)
+		if (ft_strchr(filler->figure[i], '*') && i > filler->end_fig.x)
+			filler->end_fig.x = i;
 }
 
 void	read_figure(t_filler *filler)
@@ -85,10 +100,7 @@ void	read_figure(t_filler *filler)
 		free(str);
 	}
 	filler->figure[i] = NULL;
-	i = -1;
-	while (++i < filler->fig_size.y)
-		if (filler->figure[filler->st_fig.x][i] == '*' && filler->st_fig.y < 0)
-			filler->st_fig.y = i;
+	find_start_end(filler);
 }
 
 void	count_sym(t_filler *filler)

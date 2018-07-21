@@ -6,34 +6,11 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/11 19:23:22 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/18 20:06:23 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/21 09:32:10 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-
-short	count_touch(t_filler *filler, char x, char y)
-{
-	short	i;
-	short	j;
-	char	touch;
-
-	touch = 0;
-	i = -1;
-	while (++i < filler->fig_size.x)
-	{
-		j = -1;
-		while (++j < filler->fig_size.y)
-		{
-			if (filler->figure[i][j] == '*' &&
-					filler->map[i + x][j + y] == filler->my)
-				touch++;
-		}
-	}
-	if (touch != 1)
-		return (0);
-	return (1);
-}
 
 short	is_aval(t_filler *filler, char x, char y)
 {
@@ -41,12 +18,12 @@ short	is_aval(t_filler *filler, char x, char y)
 	int		j;
 	char	touch;
 
-	i = -1;
+	i = filler->st_fig.x - 1;
+	j = filler->st_fig.y - 1;
 	touch = 0;
-	while (++i < filler->fig_size.x)
+	while (++i <= filler->end_fig.x)
 	{
-		j = -1;
-		while (++j < filler->fig_size.y)
+		while (++j <= filler->end_fig.y)
 		{
 			if (filler->figure[i][j] == '*' && (x + i < 0 || y + j < 0 ||
 						x + i >= filler->map_size.x ||
@@ -55,7 +32,11 @@ short	is_aval(t_filler *filler, char x, char y)
 			if (filler->figure[i][j] == '*' &&
 					filler->map[i + x][j + y] == filler->en)
 				return (0);
+			if (filler->figure[i][j] == '*' &&
+					filler->map[i + x][j + y] == filler->my)
+				touch++;
 		}
+		j = filler->st_fig.y - 1;
 	}
-	return (count_touch(filler, x, y));
+	return ((touch != 1) ? 0 : 1);
 }

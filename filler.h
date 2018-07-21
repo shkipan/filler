@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 14:45:03 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/18 20:32:13 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/21 09:16:47 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FILLER_H
 
 # include "libft/libft.h"
+# include "visualizer/mlx.h"
 # define IN_BORDER_X(i) (i >= 0 && i < filler->map_size.x)
 # define IN_BORDER_Y(i) (i >= 0 && i < filler->map_size.y)
 
@@ -32,6 +33,7 @@ typedef struct	s_filler
 	t_point		st_my;
 	t_point		st_en;
 	t_point		st_fig;
+	t_point		end_fig;
 	t_point		result;
 	char		**map;
 	char		**figure;
@@ -46,9 +48,15 @@ void			search_min(t_filler *filler);
 
 short			is_aval(t_filler *filler, char x, char y);
 
-void			read_player(t_filler *filler);
 void			read_map(t_filler *filler);
 void			read_figure(t_filler *filler);
 void			count_sym(t_filler *filler);
+
+/*
+** for visual part
+*/
+void			print_champs(char *line);
+void			console_visualizer(char *line);
+void			graphic_visualizer(char *line);
 
 #endif

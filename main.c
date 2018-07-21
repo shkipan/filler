@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 14:30:40 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/18 19:56:13 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/21 09:04:01 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_map(t_filler *filler)
 
 	i = -1;
 	while (++i < filler->map_size.x)
-		ft_printf("%s\n", filler->map[i]);
+		ft_printf("%3d %s\n", i, filler->map[i]);
 	i = -1;
 	while (++i < filler->fig_size.x)
 		ft_printf("%s\n", filler->figure[i]);
@@ -40,6 +40,16 @@ void	freesher(t_filler *filler)
 	free(filler->figure);
 }
 
+void	read_player(t_filler *filler)
+{
+	char	*str;
+
+	get_next_line(0, &str);
+	filler->my = (ft_strchr(str, '1')) ? 'O' : 'X';
+	filler->en = (ft_strchr(str, '2')) ? 'O' : 'X';
+	free(str);
+}
+
 int		main(void)
 {
 	t_filler	*filler;
@@ -57,6 +67,8 @@ int		main(void)
 		search_min(filler);
 		ft_printf("%d %d\n", filler->result.x, filler->result.y);
 		freesher(filler);
+		if (filler->result.x == 0 && filler->result.y == 0)
+			break ;
 	}
 	free(filler);
 	return (0);
