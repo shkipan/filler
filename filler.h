@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 14:45:03 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/21 09:16:47 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/25 16:06:11 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FILLER_H
 
 # include "libft/libft.h"
-# include "visualizer/mlx.h"
 # define IN_BORDER_X(i) (i >= 0 && i < filler->map_size.x)
 # define IN_BORDER_Y(i) (i >= 0 && i < filler->map_size.y)
 
@@ -26,8 +25,10 @@ typedef struct	s_point
 
 typedef struct	s_filler
 {
-	char		my;
-	char		en;
+	char		**map;
+	char		**figure;
+	char		*player1;
+	char		*player2;
 	t_point		map_size;
 	t_point		fig_size;
 	t_point		st_my;
@@ -35,11 +36,11 @@ typedef struct	s_filler
 	t_point		st_fig;
 	t_point		end_fig;
 	t_point		result;
-	char		**map;
-	char		**figure;
 	int			dist;
 	int			my_count;
 	int			fig_count;
+	char		my;
+	char		en;
 }				t_filler;
 
 void			find_players(t_filler *filler);
@@ -51,12 +52,5 @@ short			is_aval(t_filler *filler, char x, char y);
 void			read_map(t_filler *filler);
 void			read_figure(t_filler *filler);
 void			count_sym(t_filler *filler);
-
-/*
-** for visual part
-*/
-void			print_champs(char *line);
-void			console_visualizer(char *line);
-void			graphic_visualizer(char *line);
 
 #endif

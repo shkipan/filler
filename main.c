@@ -6,25 +6,13 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 14:30:40 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/21 09:04:01 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/25 16:09:00 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	print_map(t_filler *filler)
-{
-	int i;
-
-	i = -1;
-	while (++i < filler->map_size.x)
-		ft_printf("%3d %s\n", i, filler->map[i]);
-	i = -1;
-	while (++i < filler->fig_size.x)
-		ft_printf("%s\n", filler->figure[i]);
-}
-
-void	freesher(t_filler *filler)
+static void	freesher(t_filler *filler)
 {
 	int i;
 
@@ -40,7 +28,7 @@ void	freesher(t_filler *filler)
 	free(filler->figure);
 }
 
-void	read_player(t_filler *filler)
+static void	read_player(t_filler *filler)
 {
 	char	*str;
 
@@ -50,7 +38,7 @@ void	read_player(t_filler *filler)
 	free(str);
 }
 
-int		main(void)
+int			main(void)
 {
 	t_filler	*filler;
 	char		key;

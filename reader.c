@@ -6,13 +6,13 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/07 14:57:20 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/21 09:33:11 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/25 12:53:02 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	init_points(t_filler *filler)
+static void	init_points(t_filler *filler)
 {
 	filler->result.x = 0;
 	filler->result.y = 0;
@@ -29,7 +29,7 @@ void	init_points(t_filler *filler)
 	filler->fig_count = 0;
 }
 
-void	read_map(t_filler *filler)
+void		read_map(t_filler *filler)
 {
 	char	*str;
 	int		i;
@@ -55,7 +55,7 @@ void	read_map(t_filler *filler)
 	filler->map[i] = NULL;
 }
 
-void	find_start_end(t_filler *filler)
+static void	find_start_end(t_filler *filler)
 {
 	int		i;
 	int		j;
@@ -78,7 +78,7 @@ void	find_start_end(t_filler *filler)
 			filler->end_fig.x = i;
 }
 
-void	read_figure(t_filler *filler)
+void		read_figure(t_filler *filler)
 {
 	char	*str;
 	int		i;
@@ -103,7 +103,7 @@ void	read_figure(t_filler *filler)
 	find_start_end(filler);
 }
 
-void	count_sym(t_filler *filler)
+void		count_sym(t_filler *filler)
 {
 	short	i;
 	short	j;

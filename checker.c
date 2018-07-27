@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/11 19:23:22 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/21 09:32:10 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/21 16:03:21 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ short	is_aval(t_filler *filler, char x, char y)
 	i = filler->st_fig.x - 1;
 	j = filler->st_fig.y - 1;
 	touch = 0;
-	while (++i <= filler->end_fig.x)
+	while (++i < filler->fig_size.x)
 	{
-		while (++j <= filler->end_fig.y)
+		while (++j < filler->fig_size.y)
 		{
 			if (filler->figure[i][j] == '*' && (x + i < 0 || y + j < 0 ||
 						x + i >= filler->map_size.x ||
